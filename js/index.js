@@ -33,8 +33,12 @@ app.listen(PORT, () => {
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.sendFile(path.join(__dirname, '../html', '/index.html'));
 });
+
+app.get('/projects', (req, res) => {
+    res.sendFile(path.join(__dirname, '../html', '/projects.html'));
+})
 
 app.get('/contact', (req, res) => {
     res.sendFile(path.join(__dirname, '../html', '/contact.html'));
