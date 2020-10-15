@@ -1,13 +1,12 @@
+require('dotenv').config();
 // Express
 const express = require('express');
-const app = express();
+const router = express.Router();
 
 const path = require('path');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
 // create application/json parser
 const jsonParser = bodyParser.json();
 // create application/x-www-form-urlencoded parser
@@ -25,26 +24,20 @@ const smtpTransport = nodemailer.createTransport({
     }
 });
 
-
-// Start the server
-app.listen(PORT, () => {
-    console.log('listening on port: ' + PORT);
-});
-
 // Routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../html', '/index.html'));
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', '/html/index.html'));
 });
 
-app.get('/projects', (req, res) => {
-    res.sendFile(path.join(__dirname, '../html', '/projects.html'));
+router.get('/projects', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', '/html/projects.html'));
 })
 
-app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, '../html', '/contact.html'));
+router.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', '/html/contact.html'));
 });
 
-app.post('/contact', urlencodedParser, async (req, res) => {
+router.post('/contact', urlencodedParser, async (req, res) => {
         
     const userEmail = req.body.user_email;
     // define mail options
@@ -67,3 +60,5 @@ app.post('/contact', urlencodedParser, async (req, res) => {
     });
 
 });
+
+module.exports = router;
